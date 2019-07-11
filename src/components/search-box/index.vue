@@ -36,13 +36,16 @@ export default {
 <style lang="scss" scoped>
 .search-wrapper {
   padding: 5px;
-  box-shadow:2px 2px 5px #e5e5e5;
+  box-sizing: border-box;
+  /* box-shadow:2px 2px 5px #e5e5e5; */
 }
 .search-wrapper input{
   width: 100%;
   height: 35px;
   padding-left: 20px;
   box-sizing: border-box;
+  background-color: transparent;
+  border: 1px solid transparent
 }
 </style>
 

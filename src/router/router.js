@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import videoList from '@/views/video-list.vue'
-import videoDetails from '@/views/video-details.vue'
-
+import VideoList from '@/views/video-list.vue'
+import VideoDetails from '@/views/video-details.vue'
+import Rank from '@/views/rank'
 Vue.use(Router)
 
 export default new Router({
@@ -15,18 +15,18 @@ export default new Router({
     },
     {
       path: '/video',
-      component: videoList,
+      component: VideoList,
       children:[
         {
           path: ':id',
-          component: videoDetails,
+          component: VideoDetails,
         }
       ]
     },
-    // {
-    //   path: '/details',
-    //   component: videoDetails,
-    // }
+    {
+      path: '/rank',
+      component: Rank,
+    }
     
   ]
 })

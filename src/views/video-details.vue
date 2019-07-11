@@ -75,8 +75,8 @@ export default {
 <style lang="scss" scoped>
 .details-wrapper {
   background: #f1f1f1;
-    position: fixed;
-    z-index: 100;
+    position: absolute;
+    z-index: 500;
     top: 0;
     left: 0;
     bottom: 0;

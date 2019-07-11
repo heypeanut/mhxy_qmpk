@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="video-wrapper">
     <div class="header-bg">
       <search-box @search="search"></search-box>
     </div>
@@ -94,6 +94,12 @@ export default {
 
 
 <style lang="scss" scoped>
+
+
+.video-wrapper {
+  margin-bottom: 50px;
+}
+
 
 .header-bg {
   /* padding-top: 18%; */
