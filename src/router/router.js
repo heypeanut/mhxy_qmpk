@@ -10,12 +10,23 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      component: videoList,
+      path:'/',
+      redirect:'/video'
     },
     {
-      path:'/video',
-      component:videoDetails
-    }
+      path: '/video',
+      component: videoList,
+      children:[
+        {
+          path: ':id',
+          component: videoDetails,
+        }
+      ]
+    },
+    // {
+    //   path: '/details',
+    //   component: videoDetails,
+    // }
+    
   ]
 })

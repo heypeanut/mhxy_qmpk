@@ -38,5 +38,5 @@ export const createVideo = (video)=>{
 function normalVideoTime(timeJSONP){
   const normal = JSON.parse(timeJSONP)
 
-  return (normal.videoTime / 60).toFixed(2)
+  return ((normal.videoTime / 60).toFixed(2)).replace('.',':')
 }

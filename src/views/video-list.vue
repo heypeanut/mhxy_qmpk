@@ -1,18 +1,19 @@
 <template>
   <div>
     <div class="header-bg">
-      <search-box></search-box>
+      <search-box @search="search"></search-box>
     </div>
     <ul class="list-wrapper">
-      <li @click="selectItem(video)" v-for="video in videoList" :key="video.id">
-        <div class="img-wrapper">
-          <img :src="video.cover" alt="">
+      <li @click="selectItem(video)" v-for="(video,index) in videoList" :key="video.id">
+        <div class="img-wrapper" >
+          <img  :src="video.cover" alt="" @error="imgError(index,video)">
           <span class="video-time">{{video.videoTime}}</span>
         </div>
         <p class="text">{{winner(video.watching_team,video.winner)}} vs {{winner(video.other_team,video.winner)}}</p>
         <p class="time">{{video.match_time}}</p>
       </li>
     </ul>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -26,7 +27,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   data(){
     return {
-      videoList:[]
+      videoList:[],
+      team:'些子疏狂',
     }
   },
   computed:{
@@ -39,9 +41,8 @@ export default {
   },
   methods:{
     selectItem(item){
-      console.log(item)
       this.$router.push({
-        path:`/video`
+        path:`/video/${item.id}`
       })
       this.setVideo(item)
       this.recommendListAction({list:this.videoList,currentVideo:item})
@@ -49,8 +50,18 @@ export default {
     winner(name,winner){
       return name===winner?`${name}(胜)` : name
     },
-    _getVideoList(){
-      getVideoList().then(res=>{
+    imgError(index,video){
+      let videoList = this.videoList
+      videoList.splice(index,1)
+      this.setVideoList(videoList)
+      this.recommendListAction({list:this.videoList,currentVideo:video})
+    },
+    search(query){
+      console.log(query)
+      this._getVideoList(query)
+    },
+    _getVideoList(team){
+      getVideoList(team).then(res=>{
         if(res.status){
           this.videoList = this._normalVideos(res.data)
           this.setVideoList(this._normalVideos(res.data))
@@ -94,16 +105,16 @@ export default {
 
 
 .list-wrapper {
-  padding-top: 10px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   background: #f1f1f1;
 }
 
 
 .list-wrapper li{
-  width: 47%;
+  width: 48%;
   margin-bottom: 15px;
   padding: 5px;
   box-sizing:border-box;
@@ -145,4 +156,5 @@ export default {
   color:#999;
   transform: scale(0.9);
 }
+
 </style>

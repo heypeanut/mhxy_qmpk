@@ -1,8 +1,36 @@
 <template>
   <div class="search-wrapper">
-    <input type="text" placeholder="请输入队伍名">
+    <input ref="query" type="text" :placeholder="placeholder" v-model="query">
   </div>
 </template>
+
+<script>
+
+import {debounce} from '@/common/js/util'
+export default {
+  props:{
+    placeholder:{
+      type:String,
+      default:"请输入队伍名"
+    },
+  },
+  data(){
+    return {
+      query:''
+    }
+  },
+  created(){
+    this.$watch('query',debounce((newQuery)=>{
+      this.$emit('search',newQuery)
+    },500))
+  },
+  methods:{
+    setQuery(query){
+      this.query = query
+    },
+  }
+}
+</script>
 
 
 <style lang="scss" scoped>
