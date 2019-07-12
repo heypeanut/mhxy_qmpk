@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="details-wrapper">
+    <div ref="videoDetails" class="details-wrapper" @click.stop>
       <div class="video-wrapper">
         <span class="back" @click.stop="back"></span>
         <video :src="video.video" autoplay controls webkit-playsinline='true' playsinline='true'></video>
@@ -9,7 +9,7 @@
           <p class="text">比赛时间：{{video.match_time}}</p>
         </div>
       </div>
-      <div class="recommend">
+      <div class="recommend" @click.stop>
         <h4 class="title">视频推荐</h4>
         <ul>
           <li @click="selectItem(video)" v-for="video in recommendList" :key="video.id">
@@ -40,11 +40,12 @@ export default {
     ...mapGetters(["video", "videoList", "recommendList"])
   },
   created() {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     if (!this.video.video) {
       this.$router.push("/");
       return;
     }
+    this.$refs.videoDetails.scrollTop = 0;
   },
   methods: {
     winner(name, winner) {
@@ -56,7 +57,7 @@ export default {
     selectItem(video) {
       this.setVideo(video);
       this.recommendListAction({ list: this.videoList, currentVideo: video });
-      window.scrollTo(0, 0);
+      this.$refs.videoDetails.scrollTop = 0;
     },
     ...mapMutations({
       setVideo: "SET_VIDEO"
@@ -75,12 +76,15 @@ export default {
 <style lang="scss" scoped>
 .details-wrapper {
   background: #f1f1f1;
-    position: absolute;
-    z-index: 500;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+  position: fixed;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .video-wrapper {

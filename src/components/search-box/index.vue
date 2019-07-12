@@ -42,7 +42,8 @@ export default {
 .search-wrapper input{
   width: 100%;
   height: 35px;
-  padding-left: 20px;
+  color:inherit;
+  padding-left: 10px;
   box-sizing: border-box;
   background-color: transparent;
   border: 1px solid transparent

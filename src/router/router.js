@@ -16,12 +16,10 @@ export default new Router({
     {
       path: '/video',
       component: VideoList,
-      children:[
-        {
-          path: ':id',
-          component: VideoDetails,
-        }
-      ]
+    },
+    {
+      path: '/details',
+      component: VideoDetails,
     },
     {
       path: '/rank',

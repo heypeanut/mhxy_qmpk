@@ -42,7 +42,7 @@ export default {
   methods:{
     selectItem(item){
       this.$router.push({
-        path:`/video/${item.id}`
+        path:`/details`
       })
       this.setVideo(item)
       this.recommendListAction({list:this.videoList,currentVideo:item})
