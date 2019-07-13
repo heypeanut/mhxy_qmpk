@@ -1,6 +1,7 @@
 <template>
   <div class="search-wrapper">
     <input ref="query" type="text" :placeholder="placeholder" v-model="query">
+    <i class="iconfont icon" @click="clearInput" v-show="query">&#xe68a;</i>
   </div>
 </template>
 
@@ -28,6 +29,10 @@ export default {
     setQuery(query){
       this.query = query
     },
+    clearInput(){
+      this.query = ''
+      this.$emit('clear','')
+    }
   }
 }
 </script>
@@ -35,6 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-wrapper {
+  position: relative;
   padding: 5px;
   box-sizing: border-box;
   /* box-shadow:2px 2px 5px #e5e5e5; */
@@ -47,6 +53,22 @@ export default {
   box-sizing: border-box;
   background-color: transparent;
   border: 1px solid transparent
+}
+
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: inherit;
+  &::before {
+    content:'';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+  }
 }
 </style>
 

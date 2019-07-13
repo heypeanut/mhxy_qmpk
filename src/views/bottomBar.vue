@@ -1,12 +1,12 @@
 <template>
   <div class="bottom-bar">
     <router-link tag="div" class="tab-item" to="video">
-      <i class="icon"></i>
-      <span class="name tab-link">赛事视频</span>
+      <i class="icon iconfont">&#xe60a;</i>
+      <span class="name tab-link">视频</span>
     </router-link>
     <router-link tag="div" class="tab-item" to="rank">
-      <i class="icon"></i>
-      <span class="name tab-link">比分排行</span>
+      <i class="icon iconfont">&#xe6c5;</i>
+      <span class="name tab-link">排行</span>
     </router-link>
   </div>
 </template>
@@ -35,15 +35,15 @@
       .icon {
         width: 20px;
         height: 20px;
-        margin-bottom: 5px;
-        background: #b02015;
+        color: #b02015;
       }
     }
     .icon {
       width: 20px;
       height: 20px;
-      margin-bottom: 5px;
-      background: #f1f1f1;
+      margin-bottom: 2px;
+      text-align: center;
+      /* background: #f1f1f1; */
     }
     .name {
       font-size: 12px;

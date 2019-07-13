@@ -1,7 +1,7 @@
 <template>
   <div class="video-wrapper">
     <div class="header-bg">
-      <search-box @search="search"></search-box>
+      <search-box @search="search" @clear="clearInput"></search-box>
     </div>
     <ul class="list-wrapper">
       <li @click="selectItem(video)" v-for="(video,index) in videoList" :key="video.id">
@@ -57,8 +57,13 @@ export default {
       this.recommendListAction({list:this.videoList,currentVideo:video})
     },
     search(query){
-      console.log(query)
+      // console.log(query)
+      this.query = query
       this._getVideoList(query)
+    },
+    clearInput(){
+      console.log('删除')
+      this.query = ''
     },
     _getVideoList(team){
       getVideoList(team).then(res=>{
@@ -107,6 +112,7 @@ export default {
   width: 100%;
   /* background:url(https://xyq.res.netease.com/pc/zt/20190614111811//img/page1_1_329f120.jpg) no-repeat; */
   background-size: contain;
+  color: #666;
 }
 
 

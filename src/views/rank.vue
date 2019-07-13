@@ -9,7 +9,7 @@
         <option value ="进阶赛">进阶赛</option>
       </select>
       <div class="search">
-        <search-box @search="search"></search-box>
+        <search-box @search="search" @clear="clearInput" ref="search"></search-box>
       </div>
     </div>
     <div class="rank-list">
@@ -89,10 +89,14 @@ export default {
     },
     search(query){
       this.query = query
-      this._getRankList({ team_name:query,region:this.region,pk_type:this.pk_type})
+      this._getRankList({ team_name:query,region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page})
+    },
+    clearInput(){
+      this.query = ''
     },
     regionItem(e){
       this.region = e.target.value
+      this.$refs.search.clearInput()
       this._getRankList({ region:e.target.value,pk_type:this.pk_type,num_per_page:this.num_per_page})
     },
     pkType(e){
@@ -134,6 +138,7 @@ export default {
   display: flex;
   justify-content: space-around;
   color:#fff;
+  color: #ffba5b;
   select {
     color:inherit;
     margin: 10px 0 10px 10px;
