@@ -139,6 +139,10 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+input {
+  outline: none
+}
+
 @font-face {
   font-family: 'iconfont';  /* project id 1293135 */
   src: url('//at.alicdn.com/t/font_1293135_ohquz0ivov.eot');

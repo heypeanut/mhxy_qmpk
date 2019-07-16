@@ -70,6 +70,7 @@ export default {
         if(res.status){
           this.videoList = this._normalVideos(res.data)
           this.setVideoList(this._normalVideos(res.data))
+          console.log(this.videoList)
         }
       })
     },
