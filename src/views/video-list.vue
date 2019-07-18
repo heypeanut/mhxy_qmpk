@@ -1,19 +1,22 @@
 <template>
-  <div class="video-wrapper">
+  <div class="video-wrapper" ref="video">
     <div class="header-bg">
       <search-box @search="search" @clear="clearInput"></search-box>
     </div>
-    <ul class="list-wrapper">
-      <li @click="selectItem(video)" v-for="(video,index) in videoList" :key="video.id">
+    <ul class="list-wrapper" ref="list">
+      <li @click="selectItem(video,index)" v-for="(video,index) in videoList" :key="video.id">
         <div class="img-wrapper" >
           <img  :src="video.cover" alt="" @error="imgError(index,video)">
           <span class="video-time">{{video.videoTime}}</span>
         </div>
-        <p class="text">{{winner(video.watching_team,video.winner)}} vs {{winner(video.other_team,video.winner)}}</p>
+        <p class="text">{{winner(video.watching.team,video.winner)}} vs {{winner(video.other.team,video.winner)}}</p>
         <p class="time">{{video.match_time}}</p>
       </li>
     </ul>
-    <router-view></router-view>
+    <div class="loading" v-show="loading" ref="loading">
+      <loading :text="loadingText"></loading>
+    </div>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -21,14 +24,23 @@
 import {getVideoList} from '@/api/video-list.js'
 import {ERR_OR} from '@/api/config'
 import {createVideo} from '@/common/js/video'
+import { debounce } from '@/common/js/util'
 import SearchBox from '@/components/search-box'
+import Loading from '@/components/loading'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { setTimeout, clearTimeout } from 'timers';
 
 export default {
   data(){
     return {
       videoList:[],
-      team:'些子疏狂',
+      team:'',
+      page:1,
+      per_page:10,
+      total_num:0,
+      subgroup:'4',
+      loading:true,
+      loadingText:'加载中'
     }
   },
   computed:{
@@ -37,15 +49,17 @@ export default {
     ])
   },
   created(){
-    this._getVideoList()
+    this._getVideoList(this.team,this.page,this.per_page)
+    setTimeout(this.scroll,200)
   },
   methods:{
-    selectItem(item){
+    selectItem(item,index){
       this.$router.push({
         path:`/details`
       })
       this.setVideo(item)
-      this.recommendListAction({list:this.videoList,currentVideo:item})
+      console.log(this.videoList.slice(0,10))
+      this.recommendListAction({list:this.videoList.slice(0,10),currentVideo:item})
     },
     winner(name,winner){
       return name===winner?`${name}(胜)` : name
@@ -54,23 +68,63 @@ export default {
       let videoList = this.videoList
       videoList.splice(index,1)
       this.setVideoList(videoList)
-      this.recommendListAction({list:this.videoList,currentVideo:video})
+      this.recommendListAction({list:this.videoList.slice(0,10),currentVideo:video})
     },
     search(query){
       // console.log(query)
-      this.query = query
+      this.team = query
+      this.page = 1
+      this.total_num = 0
+      this.videoList = []
       this._getVideoList(query)
     },
     clearInput(){
-      console.log('删除')
       this.query = ''
     },
-    _getVideoList(team){
-      getVideoList(team).then(res=>{
+    scroll(){
+      window.onscroll = ()=>{
+      //变量scrollTop是滚动条滚动时，距离顶部的距离
+      var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+      //变量windowHeight是可视区的高度
+      var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      //变量scrollHeight是滚动条的总高度
+      var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+          //滚动条到底部的条件
+          if(scrollTop+windowHeight==scrollHeight){
+            //写后台加载数据的函数
+            // console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
+            if(Math.ceil((this.total_num / this.per_page)) >= this.page){
+             debounce(this._getVideoList(this.team,++this.page,this.per_page,this.subgroup),500)
+             this.$refs.loading.style.opacity = 1
+             this.loading = true
+             this.loadingText = '加载中'
+            }else{
+              this.loadingText = '没有了'
+              // this.loading = true
+              clearTimeout(this.timer)
+              this.timer = setTimeout(()=>{
+                this.loading = false
+                this.$refs.loading.style.transform = 'translateY(-30px)'
+                this.$refs.loading.style.opacity = 0
+                this.$refs.video.style.marginBottom = '30px'
+              },1000)
+            }
+          } 
+        }
+    },
+    _getVideoList(team,page,per_page,subgroup){
+      getVideoList(team,page,per_page,subgroup).then(res=>{
         if(res.status){
-          this.videoList = this._normalVideos(res.data)
-          this.setVideoList(this._normalVideos(res.data))
-          console.log(this.videoList)
+          this.total_num = res.total_num
+          this.videoList = this.videoList.concat(this._normalVideos(res.data))
+          this.setVideoList(this.videoList)
+          // clearTimeout(this.timer)
+          // this.timer = setTimeout(()=>{
+          //   this.loading = false
+          // },2000)
+        }else{
+          this.loadingText = '加载失败'
+          // this.loading = false
         }
       })
     },
@@ -93,7 +147,7 @@ export default {
     ])
   },
   components: {
-    SearchBox
+    SearchBox,Loading
   }
 }
 </script>
@@ -103,7 +157,8 @@ export default {
 
 
 .video-wrapper {
-  margin-bottom: 50px;
+  margin-bottom: 45px;
+  transition: all .5s;
 }
 
 
@@ -168,6 +223,13 @@ export default {
   font-size: 12px;
   color:#999;
   transform: scale(0.9);
+}
+
+.loading {
+  width: 100px;
+  margin: 0 auto;
+  padding: 15px;
+  transition: all .5s;
 }
 
 </style>

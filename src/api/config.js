@@ -1,5 +1,6 @@
 export const commonParams = {
-  _: 1562655022974
+  _: 1562655022974,
+  category: 5,
 }
 
 export const options = {

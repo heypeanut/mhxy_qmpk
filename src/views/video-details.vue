@@ -5,7 +5,7 @@
         <span class="back" @click.stop="back"></span>
         <video :src="video.video" autoplay controls webkit-playsinline='true' playsinline='true'></video>
         <div class="video-info">
-          <h3>{{winner(video.watching_team,video.winner)}} VS {{winner(video.other_team,video.winner)}}</h3>
+          <h3>{{winner(video.watching.team,video.winner)}} VS {{winner(video.other.team,video.winner)}}</h3>
           <p class="text">比赛时间：{{video.match_time}}</p>
         </div>
       </div>
@@ -18,7 +18,7 @@
               <span class="video-time">{{video.videoTime}}</span>
             </div>
             <div class="info-wrapper">
-              <p class="text">{{winner(video.watching_team,video.winner)}} VS {{winner(video.other_team,video.winner)}}</p>
+              <p class="text">{{winner(video.watching.team,video.winner)}} VS {{winner(video.other.team,video.winner)}}</p>
               <p class="time">{{video.match_time}}</p>
             </div>
           </li>
