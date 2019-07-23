@@ -59,6 +59,7 @@ function normalSchool(video,index){
     return {
       team:video['team'+String(index)],
       school:ret,
+      _school:_school,
       server:video['server'+String(index)],
     }
   } catch (error) {
@@ -67,5 +68,5 @@ function normalSchool(video,index){
 }
 
 
-const schoolArr = ['大唐官府','化生寺','女儿村','方寸山','天宫','普陀山','龙宫','五庄观','狮驼岭','魔王寨','阴曹地府','盘丝洞','神木林','凌波城','无底洞','女魃墓','天机城','花果山']
+export const schoolArr = ['大唐官府','化生寺','女儿村','方寸山','天宫','普陀山','龙宫','五庄观','狮驼岭','魔王寨','阴曹地府','盘丝洞','神木林','凌波城','无底洞','女魃墓','天机城','花果山']
 const subgroupArr = ['排位赛','晋级赛','赛区赛','全国赛']

@@ -10,7 +10,9 @@ const matutaions = {
   [types.SET_RECOMMEND_VIDEO_LIST](state, recommendList){
     state.recommendList = recommendList
   },
-  
+  [types.SET_ANALYSIS_LIST](state, list){
+    state.analysis = list
+  },
 }
 
 

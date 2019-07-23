@@ -8,6 +8,10 @@
       <i class="icon iconfont">&#xe6c5;</i>
       <span class="name tab-link">排行</span>
     </router-link>
+    <router-link tag="div" class="tab-item" to="analysis">
+      <i class="icon iconfont">&#xe73c;</i>
+      <span class="name tab-link">队伍分析</span>
+    </router-link>
   </div>
 </template>
 

@@ -1,7 +1,8 @@
 const state = {
   video:{},
   videoList:[],
-  recommendList:[]
+  recommendList:[],
+  analysis:[]
 }
 
 export default state
