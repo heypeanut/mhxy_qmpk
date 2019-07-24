@@ -4,7 +4,7 @@
     <div class="search">
       <search placeholder="请输入需要分析的队伍全名" @search="search"></search>
     </div>
-    <button @click="clickTeam" :disabled="query.length<3">点击分析</button>
+    <button @click="clickTeam" :disabled="query.length<1">点击分析</button>
   </div>
 </template>
 

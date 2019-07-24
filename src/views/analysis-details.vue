@@ -6,8 +6,8 @@
         <p>队伍综合数据如下</p>
       </div>
       <div class="round">
-          <p>综合胜率</p>
-          <p>{{details.odds}}</p>
+        <p>综合胜率</p>
+        <p>{{details.odds}}</p>
       </div>
     </div>
     <div class="team">
@@ -36,8 +36,8 @@
         </ul>
         <div class="wins">
           <p>上场：{{team.num}} 次</p>
-          <!-- <p>胜场：7 次</p> -->
-          <!-- <p>胜率：100%</p> -->
+          <p>胜场：{{team.winner}} 次</p>
+          <p>胜率：{{Math.round((team.winner/team.num)*100)}}%</p>
         </div>
       </div>
     </div>
@@ -49,194 +49,226 @@
       </div>
     </div>
 
-    
   </div>
 </template>
 
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import { schoolArr } from '@/common/js/video'
-const squadArr = {
-  '普通阵':['无特效','无特效','无特效','无特效','无特效'],
-  '天覆阵':['物法伤减速','物法伤减速','物法伤减速','物法伤减速','物法伤减速'],
-  '地截阵':['物法防','物法防','物法防','物法防','物法防'],
-  '风扬阵':['物法伤','物法伤','物法伤','速度','速度'],
-  '云垂阵':['物防减速','物法防','物法防','速度','速度'],
-  '龙飞阵':['法防','物防','法伤减速','速度','物法伤'],
-  '虎翼阵':['物法伤','物法防','物法防','物法伤','物法伤'],
-  '鸟翔阵':['速度','速度','速度','速度','速度'],
-  '蛇蟠阵':['法术躲避','法术躲避','法术躲避','物法伤','物法伤'],
-  '鹰啸阵':['物法防','速度','速度','物法伤','物法伤'],
-  '雷绝阵':['固伤','固伤','固伤','物法伤','物法伤']
-}
+import { mapGetters, mapMutations } from "vuex";
+import { schoolArr,schoolInstance,tactical } from "@/common/js/video";
+// const squadArr = {
+//   普通阵: ["无特效", "无特效", "无特效", "无特效", "无特效"],
+//   天覆阵: [
+//     "物法伤减速",
+//     "物法伤减速",
+//     "物法伤减速",
+//     "物法伤减速",
+//     "物法伤减速"
+//   ],
+//   地截阵: ["物法防", "物法防", "物法防", "物法防", "物法防"],
+//   风扬阵: ["物法伤", "物法伤", "物法伤", "速度", "速度"],
+//   云垂阵: ["物防减速", "物法防", "物法防", "速度", "速度"],
+//   龙飞阵: ["法防", "物防", "法伤减速", "速度", "物法伤"],
+//   虎翼阵: ["物法伤", "物法防", "物法防", "物法伤", "物法伤"],
+//   鸟翔阵: ["速度", "速度", "速度", "速度", "速度"],
+//   蛇蟠阵: ["法术躲避", "法术躲避", "法术躲避", "物法伤", "物法伤"],
+//   鹰啸阵: ["物法防", "速度", "速度", "物法伤", "物法伤"],
+//   雷绝阵: ["固伤", "固伤", "固伤", "物法伤", "物法伤"]
+// };
 export default {
-  data(){
+  data() {
     return {
-      details:{
-        name:'',
-        odds:0
-      },
+      details: {
+        name: "",
+        odds: 0
+      }
+    };
+  },
+  activated() {
+    const { name } = this.$route.params;
+    if (!this.analysis.length || !name) {
+      this.$router.push("/analysis");
+    } else {
+      this.details.name = name;
+      this.calculate();
     }
   },
-  activated(){
-    const { name } = this.$route.params
-    if(!this.analysis.length || !name){
-      this.$router.push("/analysis")
-    }else{
-      this.details.name = name
-      this.calculate()
-    }
+  beforeDestroy() {
+    console.log("销毁了");
+    this.setAnalysisList([]);
   },
-  beforeDestroy(){
-    console.log('销毁了')
-    // this.setAnalysisList([])
+  computed: {
+    ...mapGetters(["analysis"])
   },
-  computed:{
-    ...mapGetters([
-      'analysis'
-    ])
-  },
-  methods:{
-    calculate(){
-      const analysis = this.analysis.slice()
-      const {name} = this.details
-      let odds = 0
-      let playSchool = []
+  methods: {
+    calculate() {
+      const analysis = this.analysis.slice();
+      const { name } = this.details;
+      let odds = 0;
+      let playSchool = [];
+      let year = true;
       analysis.forEach(item => {
         // 统计胜率
-        if(item.winner.includes(name)){
-          odds = ++odds
+        if (item.winner.includes(name)) {
+          odds = ++odds;
         }
-
+        year = item.region.includes(2018) || item.region.includes(2019);
         //取出队伍信息
-        if(item.other.team.includes(name)){
-          playSchool.push({team:item.other,winner:item.winner})
+        if (item.other.team.includes(name) && year) {
+          playSchool.push({ team: item.other, winner: item.winner });
         }
-        if(item.watching.team.includes(name)){
-          playSchool.push({team:item.watching,winner:item.winner})
+        if (item.watching.team.includes(name) && year) {
+          playSchool.push({ team: item.watching, winner: item.winner });
         }
-
-      })
+      });
+      // console.log(playSchool)
       //返回数据
-      this.details  =  {
-        odds:Math.round((odds/analysis.length)*100) + '%',//总胜率
-        name:name,//名字
-        playSchool:this._normalPlaySchool(playSchool),//上场门派
-        most_team:this._normalMostTeam(playSchool)//最常用阵容
-        // squad:squad
-      }
-      console.log(this.details)
+      this.details = {
+        odds: Math.round(odds / analysis.length * 100) + "%", //总胜率
+        name: name, //名字
+        playSchool: this._normalPlaySchool(playSchool.slice()), //上场门派
+        most_team: this._normalMostTeam(playSchool.slice()) //最常用阵容
+        // most_array:squad
+      };
+      console.log(this.details);
     },
-    _normalPlaySchool(list){
+    _normalPlaySchool(list) {
       //处理上场门派
-      const ret = []
-      list.map(item=>{
-        item.team['school'].forEach(school=>{
-          if(ret[school] && ret[school]['school'] === school){
+      const ret = [];
+      list.map(item => {
+        item.team["school"].forEach(school => {
+          if (ret[school] && ret[school]["school"] === school) {
             ret[school] = {
-              school:school,
-              ava:`http://img.nnh206.vip/${school}.png`,
-              num:++ret[school].num
-            }
-          }else{
+              school: school,
+              ava: `http://img.nnh206.vip/${school}.png`,
+              num: ++ret[school].num
+            };
+          } else {
             ret[school] = {
-              school:school,
-              ava:`http://img.nnh206.vip/${school}.png`,
-              num:1
-            }
+              school: school,
+              ava: `http://img.nnh206.vip/${school}.png`,
+              num: 1
+            };
           }
-        })
-      })
-      const retArr = []
+        });
+      });
+      const retArr = [];
 
       for (let key in ret) {
-        retArr.push(ret[key])
+        retArr.push(ret[key]);
       }
 
-
-      return retArr
+      return retArr;
     },
-    _normalMostTeam(list){
+    _normalMostTeam(list) {
       //处理最常用阵容
-      const _list = list.slice()
-      const school = []
-      let ret = {}
-
+      const _list = list;
+      const school = [];
+      let ret = {};
       // 拿出所有的阵容原始数据进行排序
-      _list.forEach(item=>{
-        let _school = item.team['_school'].slice()
-        school.push(_school.sort((a,b)=>{
-          return a - b
-        }))
-      })
-      
+      _list.forEach(item => {
+        let _school =
+          item.team["_school"] instanceof Array
+            ? item.team["_school"].slice()
+            : [];
+        school.push({
+          original: item.team._school,
+          school: _school.sort((a, b) => {
+            return a - b;
+          }),
+          winner: item.winner
+        });
+      });
       //进行出战数统计
-      school.forEach(item=>{
-        if(ret[item.join()] && ret[item.join()]._school === item.join()){
-          ret[item.join()] = {
-            _school:item.join(),
-            num:++ret[item.join()].num,
-            school:(()=>{
-              const _school = item
-              const newSchool = []
-              _school.map(item=>{
+      school.forEach(item => {
+        if (
+          ret[item.school.join()] &&
+          ret[item.school.join()]._school === item.school.join() &&
+          item.school.length !== 0
+        ) {
+          ret[item.school.join()] = {
+            _school: item.school.join(),
+            num: ++ret[item.school.join()].num,
+            winner: item.winner.includes(this.details.name)
+              ? ++ret[item.school].winner
+              : ret[item.school].winner,
+            original: item.original,
+            tactical: this._tactical(item.original),
+            school: (() => {
+              const _school = item.school;
+              const newSchool = [];
+              _school.map(item => {
                 newSchool.push({
-                  school:schoolArr[item-1],
-                  ava:`http://img.nnh206.vip/${schoolArr[item-1]}.png`,
-                  },
-                )
-              })
-              return newSchool
+                  school: schoolArr[item - 1],
+                  ava: `http://img.nnh206.vip/${schoolArr[item - 1]}.png`
+                });
+              });
+              return newSchool;
             })()
-          }
-        }else{
-          ret[item.join()] = {
-            _school:item.join(),
-            school:(()=>{
-              const _school = item
-              const ret = []
-              _school.map(item=>{
+          };
+        } else if (item.school.length !== 0) {
+          ret[item.school.join()] = {
+            _school: item.school.join(),
+            school: (() => {
+              const _school = item.school;
+              const ret = [];
+              _school.map(item => {
                 ret.push({
-                  school:schoolArr[item-1],
-                  ava:`http://img.nnh206.vip/${schoolArr[item-1]}.png`,
-                  },
-                )
-              })
-              return ret
+                  school: schoolArr[item - 1],
+                  ava: `http://img.nnh206.vip/${schoolArr[item - 1]}.png`
+                });
+              });
+              return ret;
             })(),
-            num:1
-          }
+            num: 1,
+            original: item.original,
+            winner: item.winner.includes(this.details.name) ? 1 : 0
+          };
         }
-      })
+      });
 
       //转换数据结构
-      const retArr = []
-      for(let key in ret){
-        retArr.push(ret[key])
+      const retArr = [];
+      for (let key in ret) {
+        retArr.push(ret[key]);
       }
 
       //排序
-      retArr.sort((a,b)=>{
-        return a.num - b.num
-      })
-      return retArr.reverse()
+      retArr.sort((a, b) => {
+        return a.num - b.num;
+      });
+      return retArr.reverse();
+    },
+    _tactical(school) {
+      const _school = [];
+      let schoolStr = "";
+      console.log(school);
+      school.map(item => {
+        _school.push(schoolInstance(schoolArr[item - 1]))
+       
+      });
+    
+
+      // _school.forEach(item=>{
+
+      // })
+
+      return _school;
     },
     ...mapMutations({
-      // setAnalysisList:'SET_ANALYSIS_LIST'
+      setAnalysisList: "SET_ANALYSIS_LIST"
     })
-  },
-}
+  }
+};
 </script>
 
 
 
 <style lang="scss" scoped>
-
 .analysis {
   /* min-height: 100vh  ; */
   background-color: #191827;
-  color:#6eabf0;
+  color: #6eabf0;
   /* padding-bottom: 70px; */
   position: fixed;
   overflow: auto;
@@ -290,20 +322,22 @@ export default {
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      padding: 0 0 0 15px;
+      padding: 0 10px;
+      font-size: 14px;
       li {
+        width: 20%;
         text-align: center;
-        margin-right: 8px;
+        /* margin-right: 12px; */
         margin-bottom: 15px;
         .img {
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          width: 70px;
-          height: 70px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 65px;
+          height: 65px;
           border-radius: 50%;
           overflow: hidden;
-          margin-bottom: 10px;
+          margin: 0px auto 10px;
           img {
             display: block;
             height: 100%;
@@ -312,11 +346,13 @@ export default {
       }
     }
     .wins {
-      margin-top: 15px;
+      font-size: 14px;
+      margin: -10px 0 30px;
       padding: 15px 0;
       display: flex;
       justify-content: space-around;
-
+      /* border-top:1px solid #6eabf0; */
+      border-bottom: 1px solid #6eabf0;
     }
   }
   .pk_time {
