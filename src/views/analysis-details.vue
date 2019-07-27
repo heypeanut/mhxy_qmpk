@@ -41,13 +41,13 @@
         </div>
       </div>
     </div>
-    <div class="pk_time">
+    <!-- <div class="pk_time">
       <h3>战斗时长</h3>
       <div class="time">
         <p>最长：70 : 02</p>
         <p>最短：19 : 28</p>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </template>
@@ -242,23 +242,97 @@ export default {
     _tactical(school) {
       const _school = [];
       let schoolStr = "";
-      console.log(school);
+      let results = ''
+      // console.log(school);
       school.map(item => {
         _school.push(schoolInstance(schoolArr[item - 1]))
-       
       });
     
 
-      // _school.forEach(item=>{
+      tactical.forEach((item,index)=>{
+        // console.log(item)
+        // if(index===0){
+          results = this._tacticalComparison(item,_school)
+          if(results.state){
+            return results;
+          }
+        // }
+      })
 
-      // })
+      return results;
+    },
+    _tacticalComparison(tactical,school){
+      const results = []
+      const instance = []
+      let defense = 0 //防御
+      let wg = 0  //物攻
+      let fg = 0  //法攻
+      let s = 0   //速度
+      let avoid = 0 //躲避
+      let fixed = 0 //固伤
+      let group = true
+      for(let i = 0;i<school.length;i++){
+        // console.log('阵法')
+        // console.log(tactical[i])
+        // console.log('阵容')
+        // console.log(school[i])
 
-      return _school;
+        wg = (tactical[i].wg - school[i].wg) >= 1 ? true : false
+        fg = tactical[i].fg - school[i].fg >= 1 ? true : false
+        s = tactical[i].s - school[i].s >= 1 ? true : false 
+        defense = tactical[i].defense - school[i].defense >= 1 ? true : false
+        avoid = tactical[i].avoid - school[i].avoid >= 1 ? true : false
+        fixed = tactical[i].fixed - school[i].fixed >= 1 ? true : false
+        tactical[i].group.findIndex(item=>{
+          if(school[i].group.includes(item)){
+            return group = true
+          }else{
+            return group = false
+          }
+        })
+
+        instance.push({
+          name:school[i].school,
+          tactical:tactical[i].name,
+          location:tactical[i].location,
+          wg,fg,s,defense,avoid,fixed,group,
+        })
+      }
+
+      instance.forEach(item=>{
+        if(item.wg && item.group || item.fg && item.group && !item.s || item.s && item.group || item.defense && item.group){
+          console.log(item)
+          results.push(true)
+        }else{
+          results.push(false)
+        }
+      })
+      let _true = 0
+      results.forEach(item => {
+        if(item){
+          _true = ++_true
+        }
+      })
+      console.log(_true)
+      const tacticalName = _true>=3?instance[0].tactical:''
+      // console.log(tacticalName)
+      if(tacticalName){
+        return {
+          tacticalName,
+          state:true
+        }
+      }else{
+          return {
+          tacticalName,
+          state:false
+        }
+      }
+     
     },
     ...mapMutations({
       setAnalysisList: "SET_ANALYSIS_LIST"
     })
-  }
+  },
 };
 </script>
 

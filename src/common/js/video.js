@@ -118,7 +118,7 @@ export const schoolInstance = (school) => {
     case "方寸山":
       return {
         school: school,
-          group: ["封系", "法系"],
+          group: ["封系"],
           wg: 0, //物攻
           fg: 0, //法伤
           s: 1, //速度
@@ -288,153 +288,9 @@ export const schoolArr = ['大唐官府', '化生寺', '女儿村', '方寸山',
 
 export const tactical = [
   [{
-      name:'普通阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    },
-    {
-      name:'普通阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'普通阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'普通阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'普通阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }
-  ],
-  [{
-      name:'天覆阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 2, //物攻
-      fg: 2, //法伤
-      s: -1, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    },
-    {
-      name:'天覆阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 2, //物攻
-      fg: 2, //法伤
-      s: -1, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'天覆阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 2, //物攻
-      fg: 2, //法伤
-      s: -1, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'天覆阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 2, //物攻
-      fg: 2, //法伤
-      s: -1, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'天覆阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 2, //物攻
-      fg: 2, //法伤
-      s: -1, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    }
-  ],
-  [{
-      name:'地截阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 1, //物法防御
-      avoid:0,
-      fixed:0
-    },
-    {
-      name:'地截阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 1, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'地截阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 1, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'地截阵',
-      group: ["物理", '法系', "封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 1, //物法防御
-      avoid:0,
-      fixed:0
-    }, {
-      name:'地截阵',
-      group: ["封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 1, //速度
-      defense: 0, //物法防御
-      avoid:0,
-      fixed:0
-    },
-
-  ],
-  [{
       name:'风扬阵',
       group: ["物理", '法系'],
+      location:1,
       wg: 2, //物攻
       fg: 2, //法伤
       s: 1, //速度
@@ -445,8 +301,9 @@ export const tactical = [
     {
       name:'风扬阵',
       group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      location:2,
+      wg: 2, //物攻
+      fg: 2, //法伤
       s: 0, //速度
       defense: 0, //物法防御
       avoid:0,
@@ -455,8 +312,9 @@ export const tactical = [
     {
       name:'风扬阵',
       group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      location:3,
+      wg: 2, //物攻
+      fg: 2, //法伤
       s: 0, //速度
       defense: 0, //物法防御
       avoid:0,
@@ -465,9 +323,10 @@ export const tactical = [
     {
       name:'风扬阵',
       group: ["辅助", '封系'],
+      location:4,
       wg: 0, //物攻
       fg: 0, //法伤
-      s: 1, //速度
+      s: 2, //速度
       defense: 0, //物法防御
       avoid:0,
       fixed:0
@@ -475,9 +334,10 @@ export const tactical = [
     {
       name:'风扬阵',
       group: ["辅助", '封系'],
+      location:5,
       wg: 0, //物攻
       fg: 0, //法伤
-      s: 1, //速度
+      s: 2, //速度
       defense: 0, //物法防御
       avoid:0,
       fixed:0
@@ -486,6 +346,7 @@ export const tactical = [
   [{
     name:'云垂阵',
     group: ['法系', '物理', '封系'],
+    location:1,
     wg: 0, //物攻
     fg: 0, //法伤
     s: -3, //速度
@@ -495,14 +356,16 @@ export const tactical = [
   }, {
     name:'云垂阵',
     group: ['法系', '物理'],
+    location:2,
     wg: 0, //物攻
     fg: 0, //法伤
     s: 0, //速度
-    defense: 1, //物法防御
+    defense: 2, //物法防御
     avoid:0,
       fixed:0
   }, {
     name:'云垂阵',
+    location:3,
     group: ['法系', '物理'],
     wg: 0, //物攻
     fg: 0, //法伤
@@ -513,18 +376,20 @@ export const tactical = [
   }, {
     name:'云垂阵',
     group: ['物理', '辅助', '封系'],
+    location:4,
     wg: 0, //物攻
     fg: 0, //法伤
-    s: 1, //速度
+    s: 2, //速度
     defense: 0, //物法防御
     avoid:0,
       fixed:0
   }, {
     name:'云垂阵',
     group: ['物理', '辅助', '封系'],
+    location:5,
     wg: 0, //物攻
     fg: 0, //法伤
-    s: 1, //速度
+    s: 2, //速度
     defense: 0, //物法防御
     avoid:0,
       fixed:0
@@ -532,26 +397,29 @@ export const tactical = [
   [{
       name:'龙飞阵',
       group: ['辅助', '封系'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
-      defense: 1, //物法防御
+      defense: 2, //物法防御
       avoid:0,
       fixed:0
     },
     {
       name:'龙飞阵',
       group: ['辅助', '封系'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
-      defense: 1, //物法防御
+      defense: 2, //物法防御
       avoid:0,
       fixed:0
     },
     {
       name:'龙飞阵',
       group: ['法系'],
+      location:3,
       wg: 0, //物攻
       fg: 3, //法伤
       s: -2, //速度
@@ -562,9 +430,10 @@ export const tactical = [
     {
       name:'龙飞阵',
       group: ['封系'],
+      location:4,
       wg: 0, //物攻
       fg: 0, //法伤
-      s: 1, //速度
+      s: 2, //速度
       defense: 0, //物法防御
       avoid:0,
       fixed:0
@@ -572,6 +441,7 @@ export const tactical = [
     {
       name:'龙飞阵',
       group: ['物理', '法系'],
+      location:5,
       wg: 2, //物攻
       fg: 2, //法伤
       s: 0, //速度
@@ -583,6 +453,7 @@ export const tactical = [
   [{
       name:'虎翼阵',
       group: ['物理', '法系'],
+      location:1,
       wg: 3, //物攻
       fg: 3, //法伤
       s: 0, //速度
@@ -593,28 +464,31 @@ export const tactical = [
     {
       name:'虎翼阵',
       group: ['辅助', '封系'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
-      defense: 1, //物法防御
+      defense: 2, //物法防御
       avoid:0,
       fixed:0
     },
     {
       name:'虎翼阵',
       group: ['辅助', '封系'],
+      location:3,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
-      defense: 1, //物法防御
+      defense: 2, //物法防御
       avoid:0,
       fixed:0
     },
     {
       name:'虎翼阵',
       group: ['物理', '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      location:4,
+      wg: 2, //物攻
+      fg: 2, //法伤
       s: 0, //速度
       defense: 0, //物法防御
       avoid:0,
@@ -622,8 +496,9 @@ export const tactical = [
     }, {
       name:'虎翼阵',
       group: ['物理', '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      location:5,
+      wg: 2, //物攻
+      fg: 2, //法伤
       s: 0, //速度
       defense: 0, //物法防御
       avoid:0,
@@ -631,8 +506,112 @@ export const tactical = [
     },
   ],
   [{
+      name:'蛇蟠阵',
+      group: ["封系", '辅助'],
+      location:2,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      fixed:0,
+      avoid: 2 
+    },
+    {
+      name:'蛇蟠阵',
+      group: ["封系", '辅助'],
+      location:2,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      fixed:0,  //固定伤害
+      avoid: 2 //躲避
+    },
+    {
+      name:'蛇蟠阵',
+      group: ["封系", '辅助'],
+      location:3,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0,//物法防御
+      fixed:0,
+      avoid: 2
+    },
+    {
+      name:'蛇蟠阵',
+      group: ["物理", '法系'],
+      location:4,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid: 0
+    },
+    {
+      name:'蛇蟠阵',
+      group: ["物理", '法系'],
+      location:5,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid: 0
+    },
+  ],
+  [{
+      name:'鹰啸阵',
+      group: ['辅助', '封系'],
+      location:2,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 2, //物法防御
+      avoid: 0
+    },
+    {
+      name:'鹰啸阵',
+      group: ['封系', '辅助'],
+      location:2,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 2, //速度
+      defense: 0, //物法防御
+      avoid: 0
+    },
+    {
+      name:'鹰啸阵',
+      group: ['封系', '辅助'],
+      location:3,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 2, //速度
+      defense: 0, //物法防御
+      avoid: 0
+    }, {
+      name:'鹰啸阵',
+      group: ["物理", '法系'],
+      location:4,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid: 0
+    }, {
+      name:'鹰啸阵',
+      group: ["物理", '法系'],
+      location:5,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid: 0
+    },
+  ],
+  [{
     name:'鸟翔阵',
     group: ["物理", '法系', "封系", '辅助'],
+    location:2,
     wg: 0, //物攻
     fg: 0, //法伤
     s: 2, //速度
@@ -642,136 +621,154 @@ export const tactical = [
   }, {
     name:'鸟翔阵',
     group: ["物理", '法系', "封系", '辅助'],
+    location:2,
     wg: 0, //物攻
     fg: 0, //法伤
-    s: 1, //速度
+    s: 2, //速度
     defense: 0, //物法防御
     avoid:0,
       fixed:0
   }, {
     name:'鸟翔阵',
     group: ["物理", '法系', "封系", '辅助'],
+    location:3,
     wg: 0, //物攻
     fg: 0, //法伤
-    s: 1, //速度
+    s: 2, //速度
     defense: 0, //物法防御
     avoid:0,
       fixed:0
   }, {
     name:'鸟翔阵',
     group: ["物理", '法系', "封系", '辅助'],
+    location:4,
     wg: 0, //物攻
     fg: 0, //法伤
-    s: 1, //速度
+    s: 2, //速度
     defense: 0, //物法防御
     avoid:0,
       fixed:0
   }, {
     name:'鸟翔阵',
     group: ["物理", '法系', "封系", '辅助'],
+    location:5,
     wg: 0, //物攻
     fg: 0, //法伤
-    s: 1, //速度
+    s: 2, //速度
     defense: 0, //物法防御
     avoid:0,
       fixed:0
-  }, ],
+  }],
   [{
-      name:'蛇蟠阵',
-      group: ["封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
+      name:'天覆阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:2,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: -2, //速度
       defense: 0, //物法防御
-      fixed:0,
-      avoid: 1 
+      avoid:0,
+      fixed:0
     },
     {
-      name:'蛇蟠阵',
-      group: ["封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
+      name:'天覆阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:2,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: -2, //速度
       defense: 0, //物法防御
-      fixed:0,  //固定伤害
-      avoid: 1 //躲避
-    },
-    {
-      name:'蛇蟠阵',
-      group: ["封系", '辅助'],
-      wg: 0, //物攻
-      fg: 0, //法伤
-      s: 0, //速度
-      defense: 0,//物法防御
-      fixed:0,
-      avoid: 1
-    },
-    {
-      name:'蛇蟠阵',
-      group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
-      s: 0, //速度
+      avoid:0,
+      fixed:0
+    }, {
+      name:'天覆阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:3,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: -2, //速度
       defense: 0, //物法防御
-      avoid: 0
-    },
-    {
-      name:'蛇蟠阵',
-      group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
-      s: 0, //速度
+      avoid:0,
+      fixed:0
+    }, {
+      name:'天覆阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:4,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: -2, //速度
       defense: 0, //物法防御
-      avoid: 0
-    },
+      avoid:0,
+      fixed:0
+    }, {
+      name:'天覆阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:5,
+      wg: 2, //物攻
+      fg: 2, //法伤
+      s: -2, //速度
+      defense: 0, //物法防御
+      avoid:0,
+      fixed:0
+    }
   ],
   [{
-      name:'鹰啸阵',
-      group: ['辅助', '封系'],
+      name:'地截阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
-      defense: 1, //物法防御
-      avoid: 0
+      defense: 2, //物法防御
+      avoid:0,
+      fixed:0
     },
     {
-      name:'鹰啸阵',
-      group: ['封系', '辅助'],
+      name:'地截阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
-      s: 1, //速度
-      defense: 0, //物法防御
-      avoid: 0
-    },
-    {
-      name:'鹰啸阵',
-      group: ['封系', '辅助'],
+      s: 0, //速度
+      defense: 2, //物法防御
+      avoid:0,
+      fixed:0
+    }, {
+      name:'地截阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:3,
       wg: 0, //物攻
       fg: 0, //法伤
-      s: 1, //速度
-      defense: 0, //物法防御
-      avoid: 0
-    }, {
-      name:'鹰啸阵',
-      group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
       s: 0, //速度
-      defense: 0, //物法防御
-      avoid: 0
+      defense: 2, //物法防御
+      avoid:0,
+      fixed:0
     }, {
-      name:'鹰啸阵',
-      group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      name:'地截阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:4,
+      wg: 0, //物攻
+      fg: 0, //法伤
       s: 0, //速度
+      defense: 2, //物法防御
+      avoid:0,
+      fixed:0
+    }, {
+      name:'地截阵',
+      group: ["封系", '辅助'],
+      location:5,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 2, //速度
       defense: 0, //物法防御
-      avoid: 0
-    },
-  ],
+      avoid:0,
+      fixed:0
+    }
+  ] ,
   [{
       name:'雷绝阵',
       group: ["辅助", '封系'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
@@ -782,6 +779,7 @@ export const tactical = [
     {
       name:'雷绝阵',
       group: ["辅助", '封系'],
+      location:2,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
@@ -792,6 +790,7 @@ export const tactical = [
     {
       name:'雷绝阵',
       group: ["辅助", '封系'],
+      location:3,
       wg: 0, //物攻
       fg: 0, //法伤
       s: 0, //速度
@@ -802,8 +801,9 @@ export const tactical = [
     {
       name:'雷绝阵',
       group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      location:4,
+      wg: 2, //物攻
+      fg: 2, //法伤
       s: 0, //速度
       defense: 0, //物法防御
       avoid: 0,
@@ -812,14 +812,68 @@ export const tactical = [
     {
       name:'雷绝阵',
       group: ["物理", '法系'],
-      wg: 1, //物攻
-      fg: 1, //法伤
+      location:5,
+      wg: 2, //物攻
+      fg: 2, //法伤
       s: 0, //速度
       defense: 0, //物法防御
       avoid: 0,
       fixed: 2
     },
-  ]
+  ],
+  [{
+      name:'普通阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:1,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid:0,
+      fixed:0
+    },
+    {
+      name:'普通阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:2,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid:0,
+      fixed:0
+    }, {
+      name:'普通阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:3,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid:0,
+      fixed:0
+    }, {
+      name:'普通阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:4,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid:0,
+      fixed:0
+    }, {
+      name:'普通阵',
+      group: ["物理", '法系', "封系", '辅助'],
+      location:5,
+      wg: 0, //物攻
+      fg: 0, //法伤
+      s: 0, //速度
+      defense: 0, //物法防御
+      avoid:0,
+      fixed:0
+    }
+  ],
 ];
 
 const subgroupArr = ['排位赛', '晋级赛', '赛区赛', '全国赛']

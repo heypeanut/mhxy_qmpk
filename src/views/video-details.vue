@@ -14,6 +14,7 @@
         <ul>
           <li @click="selectItem(video)" v-for="video in recommendList" :key="video.id">
             <div class="img-wrapper">
+              <i class="iconfont" :class="video.imgError?'img-error':'img-success'">&#xec0d;</i>
               <img :src="video.cover" alt="">
               <span class="video-time">{{video.videoTime}}</span>
             </div>
@@ -174,12 +175,30 @@ export default {
 
 .img-wrapper {
   position: relative;
+  overflow: hidden;
 }
 
 .recommend ul li img {
   width: 150px;
+  min-width:150px;
+  min-height: 7em;
+  max-height:7em;
+  background: #333;
   border-radius: 2px;
   margin-right: 10px;
+}
+
+.img-error {
+  position: absolute;
+  font-size: 30px;
+  color:#fff;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+}
+
+.img-success {
+  display: none;
 }
 
 .recommend ul li .video-time {

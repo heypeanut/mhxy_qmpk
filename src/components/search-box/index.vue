@@ -40,6 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-wrapper {
+  width: 100%;
   position: relative;
   padding: 5px;
   box-sizing: border-box;

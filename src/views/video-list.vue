@@ -6,6 +6,7 @@
     <ul class="list-wrapper" ref="list">
       <li @click="selectItem(video,index)" v-for="(video,index) in videoList" :key="video.id">
         <div class="img-wrapper" >
+          <i class="iconfont" :class="video.imgError?'img-error':'img-success'">&#xec0d;</i>
           <img  :src="video.cover" alt="" @error="imgError(index,video)">
           <span class="video-time">{{video.videoTime}}</span>
         </div>
@@ -66,7 +67,7 @@ export default {
     },
     imgError(index,video){
       let videoList = this.videoList
-      videoList.splice(index,1)
+      videoList[index].imgError = true
       this.setVideoList(videoList)
       this.recommendListAction({list:this.videoList.slice(0,10),currentVideo:video})
     },
@@ -93,7 +94,7 @@ export default {
           if(scrollTop+windowHeight==scrollHeight){
             //写后台加载数据的函数
             // console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
-            if(Math.ceil((this.total_num / this.per_page)) >= this.page){
+            if(Math.ceil((this.total_num / this.per_page) -30) >= this.page){
              debounce(this._getVideoList(this.team,++this.page,this.per_page,this.subgroup),500)
              this.$refs.loading.style.opacity = 1
              this.loading = true
@@ -192,11 +193,29 @@ export default {
 
 .img-wrapper {
   position: relative;
+  overflow: hidden;
 }
 
 .list-wrapper li img{
   width: 100%;
+  min-width:100%;
+  min-height: 7em;
+  max-height:7em;
+  background: #333;
   border-radius:2px;
+}
+
+.img-error {
+  position: absolute;
+  font-size: 30px;
+  color:#fff;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+}
+
+.img-success {
+  display: none;
 }
 
 .list-wrapper li .video-time {

@@ -56,6 +56,7 @@ export default {
       num_per_page: 25,
       total_page:-1,
       pk_type:1,
+      period:'2019',
       pk_type_arr:['排位赛','进阶赛'],
       query:'',
       regionList:['两广赛区','闽赣赛区','中西赛区','东北华北赛区','浙江赛区','山东赛区','豫皖赛区','苏沪赛区']
@@ -67,13 +68,13 @@ export default {
     }
   },
   created(){
-    this._getRankList({region:this.region,num_per_page:this.num_per_page})
+    this._getRankList({region:this.region,num_per_page:this.num_per_page,period:this.period})
   },
   methods:{
     prev(){
       let page_no = --this.page_no
       if(page_no <= this.total_page){
-        return this._getRankList({ page:page_no,region:this.region,num_per_page:this.num_per_page})
+        return this._getRankList({ page:page_no,region:this.region,num_per_page:this.num_per_page,period:this.period})
       }else{
         this.page_no = 1
       }
@@ -82,14 +83,14 @@ export default {
     next(){
       let page_no = ++this.page_no
       if(page_no <= this.total_page){
-        return this._getRankList({ page:page_no,region:this.region,num_per_page:this.num_per_page})
+        return this._getRankList({ page:page_no,region:this.region,num_per_page:this.num_per_page,period:this.period})
       }else{
         this.page_no = this.total_page
       }
     },
     search(query){
       this.query = query
-      this._getRankList({ team_name:query,region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page})
+      this._getRankList({ team_name:query,region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,period:this.period})
     },
     clearInput(){
       this.query = ''
@@ -97,12 +98,12 @@ export default {
     regionItem(e){
       this.region = e.target.value
       this.$refs.search.clearInput()
-      this._getRankList({ region:e.target.value,pk_type:this.pk_type,num_per_page:this.num_per_page})
+      this._getRankList({ region:e.target.value,pk_type:this.pk_type,num_per_page:this.num_per_page,period:this.period})
     },
     pkType(e){
       this.pk_type = e.target.value == '排位赛' ? 1 : 2
       console.log(e.target.value)
-      this._getRankList({ region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,team_name:this.query})
+      this._getRankList({ region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,team_name:this.query,period:this.period})
     },
     _getRankList(info){
       getRankList(info).then(res=>{

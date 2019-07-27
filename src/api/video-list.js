@@ -9,7 +9,6 @@ export function getVideoList(team,page,per_page,subgroup) {
     subgroup,
     page:page ? page : 1,
     per_page:per_page ? per_page : 10,
-    
   })
 
   if(!subgroup){
