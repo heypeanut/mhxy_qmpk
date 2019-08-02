@@ -22,10 +22,12 @@
           </li>
         </ul>
       </div>
+      <radar :value="radarData.value" :indicator="radarData.indicator"></radar>
     </div>
     <div class="team">
       <h3>全部阵容</h3>
       <div v-for="(team,index) in details.most_team" :key="index">
+        <h4>阵容 {{index+1}}</h4>
         <ul>
           <li v-for="(item,index) in team.school" :key="index+item">
             <div class="img">
@@ -40,14 +42,21 @@
           <p>胜率：{{Math.round((team.winner/team.num)*100)}}%</p>
         </div>
       </div>
+      <pic title="阵容出战数据" :data="mostTeam"></pic>
     </div>
-    <!-- <div class="pk_time">
-      <h3>战斗时长</h3>
+    <div class="pk_time">
+      <line-figure 
+        title="PK时长分析" 
+        subtext="根据PK时长排序该队伍战斗时间（分钟）"
+        :xAxisData="lineData.xAxisData"
+        :seriesData="lineData.seriesData"
+        ></line-figure>
       <div class="time">
-        <p>最长：70 : 02</p>
-        <p>最短：19 : 28</p>
+        <p>战斗数：{{lineData.timer.length}}场</p>
+        <p>最短：{{lineData.timer[0]}}分</p>
+        <p>最长：{{lineData.timer[lineData.timer.length-1]}}分</p>
       </div>
-    </div> -->
+    </div>
 
   </div>
 </template>
@@ -55,26 +64,12 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import { schoolArr,schoolInstance,tactical } from "@/common/js/video";
-// const squadArr = {
-//   普通阵: ["无特效", "无特效", "无特效", "无特效", "无特效"],
-//   天覆阵: [
-//     "物法伤减速",
-//     "物法伤减速",
-//     "物法伤减速",
-//     "物法伤减速",
-//     "物法伤减速"
-//   ],
-//   地截阵: ["物法防", "物法防", "物法防", "物法防", "物法防"],
-//   风扬阵: ["物法伤", "物法伤", "物法伤", "速度", "速度"],
-//   云垂阵: ["物防减速", "物法防", "物法防", "速度", "速度"],
-//   龙飞阵: ["法防", "物防", "法伤减速", "速度", "物法伤"],
-//   虎翼阵: ["物法伤", "物法防", "物法防", "物法伤", "物法伤"],
-//   鸟翔阵: ["速度", "速度", "速度", "速度", "速度"],
-//   蛇蟠阵: ["法术躲避", "法术躲避", "法术躲避", "物法伤", "物法伤"],
-//   鹰啸阵: ["物法防", "速度", "速度", "物法伤", "物法伤"],
-//   雷绝阵: ["固伤", "固伤", "固伤", "物法伤", "物法伤"]
-// };
+import { schoolArr, schoolInstance, tactical } from "@/common/js/video";
+import Radar from "@/components/radar";
+import Pic from "@/components/pie";
+import LineFigure from "@/components/line";
+
+
 export default {
   data() {
     return {
@@ -93,11 +88,124 @@ export default {
       this.calculate();
     }
   },
-  beforeDestroy() {
-    console.log("销毁了");
+  destroyed(){
+    console.log('销毁了')
     this.setAnalysisList([]);
   },
   computed: {
+    radarData() {
+      const playSchool = this.details.playSchool;
+      const auxiliary = ["普陀山", "化生寺", "无底洞", "阴曹地府"];
+      const sealing = [
+        "女儿村",
+        "方寸山",
+        "盘丝岭",
+        "五庄观",
+        "天宫",
+        "无底洞"
+      ];
+      const physical = ["大唐官府", "狮驼岭", "五庄观", "凌波城", "花果山"];
+      const element = ["龙宫", "魔王寨", "天宫", "神木林"];
+      const tomb = ["女魃墓"];
+      const machine = ["天机城"];
+      const indicator = [
+        {
+          name: "辅助",
+          max: 0
+        },
+        {
+          name: "封系",
+          max: 0
+        },
+        {
+          name: "传统物理",
+          max: 0
+        },
+        {
+          name: "传统法系",
+          max: 0
+        },
+        {
+          name: "女魃墓",
+          max: 0
+        },
+        {
+          name: "天机城",
+          max: 0
+        }
+      ];
+      if(!playSchool){
+        return false
+      }
+      playSchool.map(item => {
+        if (auxiliary.includes(item.school)) {
+          indicator[0]["max"] += item.num;
+        }
+        if (sealing.includes(item.school)) {
+          indicator[1]["max"] += item.num;
+        }
+        if (physical.includes(item.school)) {
+          indicator[2]["max"] += item.num;
+        }
+        if (element.includes(item.school)) {
+          indicator[3]["max"] += item.num;
+        }
+        if (tomb.includes(item.school)) {
+          indicator[4]["max"] += item.num;
+        }
+        if (machine.includes(item.school)) {
+          indicator[5]["max"] += item.num;
+        }
+      });
+      let value = [];
+      let max = playSchool.sort((a, b) => {
+        return a.num < b.num;
+      });
+      for (let i = 0; i < indicator.length; i++) {
+        if (indicator[i].max === 0) {
+          value.push(max.max);
+        } else {
+          value.push(indicator[i].max * 0.8);
+        }
+      }
+      return {
+        value,
+        indicator
+      };
+    },
+    mostTeam() {
+      const most_team = this.details.most_team;
+      const ret = [];
+      if(!most_team){
+        return false
+      }
+      most_team.map((item, index) => {
+        ret.push({
+          name: `阵容 ${index + 1}`,
+          value: item.num
+        });
+      });
+      return ret;
+    },
+    lineData(){
+      const fighting_timer = this.details.fighting_timer
+      const xAxisData = []
+      const seriesData = []
+      const timer = []
+      if(!fighting_timer){
+        return false
+      }
+      fighting_timer.map((item,index)=>{
+        timer.push(item.videoTime.videoTime)
+        xAxisData.push(parseInt(item.videoTime.videoTime))
+        seriesData.push(item.videoTime.original)
+      })
+      return {
+        xAxisData:xAxisData,
+        seriesData:seriesData,
+        timer:timer
+      }
+    },
     ...mapGetters(["analysis"])
   },
   methods: {
@@ -127,10 +235,11 @@ export default {
         odds: Math.round(odds / analysis.length * 100) + "%", //总胜率
         name: name, //名字
         playSchool: this._normalPlaySchool(playSchool.slice()), //上场门派
-        most_team: this._normalMostTeam(playSchool.slice()) //最常用阵容
+        most_team: this._normalMostTeam(playSchool.slice()), //最常用阵容
+        fighting_timer: this._normalFightingTimer(analysis.slice()) //战斗时长统计
         // most_array:squad
       };
-      console.log(this.details);
+      // console.log(this.details);
     },
     _normalPlaySchool(list) {
       //处理上场门派
@@ -176,6 +285,7 @@ export default {
           school: _school.sort((a, b) => {
             return a - b;
           }),
+          tactical: [],
           winner: item.winner
         });
       });
@@ -193,7 +303,6 @@ export default {
               ? ++ret[item.school].winner
               : ret[item.school].winner,
             original: item.original,
-            tactical: this._tactical(item.original),
             school: (() => {
               const _school = item.school;
               const newSchool = [];
@@ -239,100 +348,25 @@ export default {
       });
       return retArr.reverse();
     },
-    _tactical(school) {
-      const _school = [];
-      let schoolStr = "";
-      let results = ''
-      // console.log(school);
-      school.map(item => {
-        _school.push(schoolInstance(schoolArr[item - 1]))
+    _normalFightingTimer(list) {
+      const _list = list.sort((a, b) => {
+        return a.videoTime.original - b.videoTime.original;
       });
-    
-
-      tactical.forEach((item,index)=>{
-        // console.log(item)
-        // if(index===0){
-          results = this._tacticalComparison(item,_school)
-          if(results.state){
-            return results;
-          }
-        // }
-      })
-
-      return results;
-    },
-    _tacticalComparison(tactical,school){
-      const results = []
-      const instance = []
-      let defense = 0 //防御
-      let wg = 0  //物攻
-      let fg = 0  //法攻
-      let s = 0   //速度
-      let avoid = 0 //躲避
-      let fixed = 0 //固伤
-      let group = true
-      for(let i = 0;i<school.length;i++){
-        // console.log('阵法')
-        // console.log(tactical[i])
-        // console.log('阵容')
-        // console.log(school[i])
-
-        wg = (tactical[i].wg - school[i].wg) >= 1 ? true : false
-        fg = tactical[i].fg - school[i].fg >= 1 ? true : false
-        s = tactical[i].s - school[i].s >= 1 ? true : false 
-        defense = tactical[i].defense - school[i].defense >= 1 ? true : false
-        avoid = tactical[i].avoid - school[i].avoid >= 1 ? true : false
-        fixed = tactical[i].fixed - school[i].fixed >= 1 ? true : false
-        tactical[i].group.findIndex(item=>{
-          if(school[i].group.includes(item)){
-            return group = true
-          }else{
-            return group = false
-          }
-        })
-
-        instance.push({
-          name:school[i].school,
-          tactical:tactical[i].name,
-          location:tactical[i].location,
-          wg,fg,s,defense,avoid,fixed,group,
-        })
-      }
-
-      instance.forEach(item=>{
-        if(item.wg && item.group || item.fg && item.group && !item.s || item.s && item.group || item.defense && item.group){
-          console.log(item)
-          results.push(true)
-        }else{
-          results.push(false)
-        }
-      })
-      let _true = 0
-      results.forEach(item => {
-        if(item){
-          _true = ++_true
-        }
-      })
-      console.log(_true)
-      const tacticalName = _true>=3?instance[0].tactical:''
-      // console.log(tacticalName)
-      if(tacticalName){
-        return {
-          tacticalName,
-          state:true
-        }
-      }else{
-          return {
-          tacticalName,
-          state:false
-        }
-      }
-     
+      // console.log(_list);
+      return _list
+      // _list.map((item,index)=>{
+      //   console.log(item.original)
+      // })
     },
     ...mapMutations({
       setAnalysisList: "SET_ANALYSIS_LIST"
     })
   },
+  components: {
+    Radar,
+    Pic,
+    LineFigure,
+  }
 };
 </script>
 
@@ -430,11 +464,13 @@ export default {
     }
   }
   .pk_time {
-    padding: 0 0 15px;
-    background: #1a154e;
+    margin-top: -50px;
+    padding: 0 0 25px;
+    /* background: #1a154e; */
     .time {
       display: flex;
       justify-content: space-around;
+      margin-top: -15px;
     }
   }
 }

@@ -16,7 +16,7 @@
             <div class="img-wrapper">
               <i class="iconfont" :class="video.imgError?'img-error':'img-success'">&#xec0d;</i>
               <img :src="video.cover" alt="">
-              <span class="video-time">{{video.videoTime}}</span>
+              <span class="video-time">{{video.videoTime.videoTime}}</span>
             </div>
             <div class="info-wrapper">
               <p class="text">{{winner(video.watching.team,video.winner)}} VS {{winner(video.other.team,video.winner)}}</p>
@@ -182,7 +182,7 @@ export default {
   width: 150px;
   min-width:150px;
   min-height: 7em;
-  max-height:7em;
+  /* max-height:7em; */
   background: #333;
   border-radius: 2px;
   margin-right: 10px;

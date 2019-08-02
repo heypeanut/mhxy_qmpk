@@ -41,7 +41,7 @@ export default {
         .then(data=>{
           this.query = query
           this.setAnalysisList(data)
-          console.log(data)
+          // console.log(data)
           this.$router.push({
             path:`/analysis-details/${query}`
           })

@@ -8,7 +8,7 @@
         <div class="img-wrapper" >
           <i class="iconfont" :class="video.imgError?'img-error':'img-success'">&#xec0d;</i>
           <img  :src="video.cover" alt="" @error="imgError(index,video)">
-          <span class="video-time">{{video.videoTime}}</span>
+          <span class="video-time">{{video.videoTime.videoTime}}</span>
         </div>
         <p class="text">{{winner(video.watching.team,video.winner)}} vs {{winner(video.other.team,video.winner)}}</p>
         <p class="time">{{video.match_time}}</p>
@@ -59,7 +59,7 @@ export default {
         path:`/details`
       })
       this.setVideo(item)
-      console.log(this.videoList.slice(0,10))
+      // console.log(this.videoList.slice(0,10))
       this.recommendListAction({list:this.videoList.slice(0,10),currentVideo:item})
     },
     winner(name,winner){
@@ -200,7 +200,7 @@ export default {
   width: 100%;
   min-width:100%;
   min-height: 7em;
-  max-height:7em;
+  /* max-height:7em; */
   background: #333;
   border-radius:2px;
 }

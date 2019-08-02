@@ -50,7 +50,10 @@ function normalVideoTime(timeJSONP) {
   try {
     const normal = JSON.parse(timeJSONP)
 
-    return normal.videoTime ? ((normal.videoTime / 60).toFixed(2)).replace('.', ':') : ''
+    return {
+      videoTime:normal.videoTime ? ((normal.videoTime / 60).toFixed(2)).replace('.', ':') : '',
+      original:normal.videoTime 
+    }
   } catch (error) {
     return ''
   }
@@ -80,7 +83,77 @@ function normalSchool(video, index) {
   }
 }
 
-export const schoolInstance = (school) => {
+const AUXILIARY = ['女儿村', '方寸山','五庄观','化生寺', '普陀山','阴曹地府','无底洞', '盘丝洞','天宫','天机城']
+const OUTPUT = ['大唐官府','天宫','龙宫','五庄观','狮驼岭','魔王寨','凌波城','女魃墓','天机城','花果山']
+
+export const tactical = () => {
+  return [
+    [{
+      name:'鹰啸阵',
+      schools:AUXILIARY,
+    },
+    {
+      name:'鹰啸阵',
+      schools: AUXILIARY,
+    },
+    {
+      name:'鹰啸阵',
+      schools: AUXILIARY
+    }, {
+      name:'鹰啸阵',
+      schools: OUTPUT,
+    }, {
+      name:'鹰啸阵',
+      schools: OUTPUT,
+    },
+  ],
+  [{
+    name:'虎翼阵',
+    schools: OUTPUT,
+  },
+  {
+    name:'虎翼阵',
+    schools: AUXILIARY
+  },
+  {
+    name:'虎翼阵',
+    schools: AUXILIARY
+  },
+  {
+    name:'虎翼阵',
+    schools: OUTPUT,
+  }, {
+    name:'虎翼阵',
+    schools: OUTPUT,
+    },
+  ],
+  [
+    {
+      name:'风扬阵',
+      schools:OUTPUT
+    },
+    {
+      name:'风扬阵',
+      schools:OUTPUT
+    },
+    {
+      name:'风扬阵',
+      schools:OUTPUT
+    },
+    {
+      name:'风扬阵',
+      schools:AUXILIARY
+    },
+    {
+      name:'风扬阵',
+      schools:AUXILIARY
+    }],
+  ]
+}
+
+
+
+export const schoolInstance1 = (school) => {
   switch (school) {
     case "大唐官府":
       return {
@@ -286,7 +359,7 @@ export const schoolInstance = (school) => {
 
 export const schoolArr = ['大唐官府', '化生寺', '女儿村', '方寸山', '天宫', '普陀山', '龙宫', '五庄观', '狮驼岭', '魔王寨', '阴曹地府', '盘丝洞', '神木林', '凌波城', '无底洞', '女魃墓', '天机城', '花果山']
 
-export const tactical = [
+export const tactical1 = [
   [{
       name:'风扬阵',
       group: ["物理", '法系'],
