@@ -90,7 +90,7 @@ export default {
     },
     search(query){
       this.query = query
-      this._getRankList({ team_name:query,region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,period:this.period})
+      this._getRankList({ team_name:query.trim(),region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,period:this.period})
     },
     clearInput(){
       this.query = ''
