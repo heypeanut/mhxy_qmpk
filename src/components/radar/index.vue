@@ -42,6 +42,11 @@ export default {
       myChart.setOption({
         title: {
           text: this.title,
+          x: "center",
+          textStyle: {
+            color: "#6eabf0",
+            fontWeight:400
+          }
         },
         legend: {
             data: ['门派场数', '实际开销（Actual Spending）']

@@ -52,6 +52,7 @@ export default {
           textStyle: {
             color: "#6eabf0",
             fontSize: 18,
+            fontWeight:400
           }
         },
         textStyle: {

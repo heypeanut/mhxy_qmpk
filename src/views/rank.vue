@@ -74,7 +74,7 @@ export default {
     prev(){
       let page_no = --this.page_no
       if(page_no <= this.total_page){
-        return this._getRankList({ page:page_no,region:this.region,num_per_page:this.num_per_page,period:this.period})
+        return this._getRankList({ page:page_no,region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,period:this.period})
       }else{
         this.page_no = 1
       }
@@ -83,7 +83,7 @@ export default {
     next(){
       let page_no = ++this.page_no
       if(page_no <= this.total_page){
-        return this._getRankList({ page:page_no,region:this.region,num_per_page:this.num_per_page,period:this.period})
+        return this._getRankList({ page:page_no,region:this.region,pk_type:this.pk_type,num_per_page:this.num_per_page,period:this.period})
       }else{
         this.page_no = this.total_page
       }

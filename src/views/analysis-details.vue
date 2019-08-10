@@ -470,6 +470,7 @@ export default {
     .time {
       display: flex;
       justify-content: space-around;
+      font-size: 14px;
       margin-top: -15px;
     }
   }

@@ -36,7 +36,7 @@ export default {
       this.query = query
     },
     clickTeam(){
-      const query = this.query
+      const query = this.query.trim()
       this._getVideoList(query)
         .then(data=>{
           this.query = query

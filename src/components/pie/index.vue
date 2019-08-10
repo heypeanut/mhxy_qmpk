@@ -42,6 +42,7 @@ export default {
           x: "center",
           textStyle: {
             color: "#6eabf0",
+            fontWeight:400
           }
         },
         tooltip: {

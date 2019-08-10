@@ -77,7 +77,7 @@ export default {
       this.page = 1
       this.total_num = 0
       this.videoList = []
-      this._getVideoList(query)
+      this._getVideoList(query.trim())
     },
     clearInput(){
       this.query = ''
